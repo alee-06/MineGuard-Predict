@@ -42,20 +42,34 @@ class DataService:
         self.demo_episode_id: str = "EP-0001"
         self.demo_start_step: int = 372
         self.demo_hazard_step: int = 383
-        self.demo_max_step: int = 432
+        self.demo_max_step: int = 719
         self.demo_step_index: int = 372  # Step within demo shift
         
         self.load()
 
+    def get_demo_max_step(self) -> int:
+        """Dynamically computes the maximum time step available for the active demo episode."""
+        if self.df is not None and "episode_id" in self.df.columns:
+            ep_df = self.df[self.df["episode_id"] == self.demo_episode_id]
+            if len(ep_df) > 0:
+                if "zone_id" in ep_df.columns:
+                    zone_lens = ep_df.groupby("zone_id").size()
+                    if len(zone_lens) > 0:
+                        return max(35, int(zone_lens.min()) - 1)
+                return max(35, len(ep_df) - 1)
+        return 719
+
     def advance_demo_step(self, increment: int = 1) -> int:
-        """Advances the live demo simulation by increment steps, looping seamlessly at cycle end."""
+        """Advances the live demo simulation by increment steps, looping seamlessly only when the full shift finishes."""
+        max_step = self.get_demo_max_step()
+        self.demo_max_step = max_step
         self.demo_step_index += increment
-        if self.demo_step_index > self.demo_max_step:
+        if self.demo_step_index > max_step:
             self.demo_step_index = self.demo_start_step
         return self.demo_step_index
 
     def reset_demo(self, step: Optional[int] = None) -> int:
-        """Resets the demo simulation to baseline."""
+        """Resets the demo simulation to baseline safe state."""
         self.demo_step_index = step if step is not None else self.demo_start_step
         return self.demo_step_index
 

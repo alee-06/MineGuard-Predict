@@ -365,7 +365,7 @@ export const LiveMonitoringWorkspace: React.FC<LiveMonitoringWorkspaceProps> = (
               </div>
               <p className="text-xs text-[#8797A8] mt-0.5">
                 {status?.is_demo_mode
-                  ? `Replaying episode ${status.demo_episode_id || 'EP-0001'} · Step ${overview?.live_stream?.step_index ?? status.demo_step_index} · Clock ${overview?.live_stream?.simulated_time ?? '06:15'} · Continuous 2s telemetry advance.`
+                  ? `Replaying episode ${status.demo_episode_id || 'EP-0001'} · Step ${overview?.live_stream?.step_index ?? status.demo_step_index} / ${status.demo_max_step || overview?.live_stream?.max_step || 719} · Clock ${overview?.live_stream?.simulated_time ?? '06:15'} · Continuous 2s telemetry advance.`
                   : status?.is_hardware_connected
                   ? 'Receiving telemetry from subterranean wireless mesh gateway.'
                   : 'Physical telemetry receiver is offline. Click "Start Live Simulation" to stream realistic sensor telemetry and evaluate advance AI risk.'}
@@ -768,7 +768,7 @@ export const LiveMonitoringWorkspace: React.FC<LiveMonitoringWorkspaceProps> = (
                 </div>
 
                 <div className="text-[11px] text-[#8797A8] font-mono">
-                  Clock: {overview.live_stream.simulated_time} (Step {overview.live_stream.step_index})
+                  Clock: {overview.live_stream.simulated_time} (Step {overview.live_stream.step_index} / {overview.live_stream.max_step || status?.demo_max_step || 719})
                 </div>
               </div>
             </div>

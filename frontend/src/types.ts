@@ -296,6 +296,7 @@ export interface LiveStatusResponse {
   is_demo_mode: boolean;
   demo_episode_id: string;
   demo_step_index: number;
+  demo_max_step?: number;
   active_dataset: string;
   total_zones: number;
 }
@@ -354,6 +355,7 @@ export interface LiveOverviewResponse {
     current_methane: number;
     current_airflow: number;
     step_index: number;
+    max_step?: number;
     simulated_time: string;
     points: Array<{
       timestamp: string;

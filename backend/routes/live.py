@@ -52,6 +52,7 @@ def get_live_status():
         "demo_simulation_active": bool(srv.is_demo_mode),
         "demo_episode_id": str(srv.demo_episode_id),
         "demo_step_index": int(srv.demo_step_index),
+        "demo_max_step": int(srv.get_demo_max_step()),
         "configured_threshold_pct": 1.0,
         "last_telemetry_timestamp": last_time,
         "active_dataset": str(srv.active_dataset_name),
@@ -64,6 +65,7 @@ def get_live_status():
 def toggle_demo_mode(
     enable: Optional[bool] = Query(None),
     episode_id: Optional[str] = Query(None),
+    step_index: Optional[int] = Query(None),
     req: Optional[ToggleDemoRequest] = None,
 ):
     srv = get_service()
@@ -80,20 +82,26 @@ def toggle_demo_mode(
         target_enable = enable
     if episode_id is not None:
         target_ep = episode_id
+    if step_index is not None:
+        target_step = step_index
 
     if target_enable is None:
         srv.is_demo_mode = not srv.is_demo_mode
     else:
         srv.is_demo_mode = bool(target_enable)
 
-    if srv.is_demo_mode:
-        if srv.demo_step_index < 360 or srv.demo_step_index > getattr(srv, "demo_max_step", 432):
-            srv.demo_step_index = getattr(srv, "demo_start_step", 372)
-
     if target_ep:
         srv.demo_episode_id = target_ep
+
+    max_step = srv.get_demo_max_step()
+    srv.demo_max_step = max_step
+
+    if srv.is_demo_mode:
+        if srv.demo_step_index > max_step:
+            srv.demo_step_index = srv.demo_start_step
+
     if target_step is not None:
-        srv.demo_step_index = int(target_step)
+        srv.demo_step_index = max(35, min(int(target_step), max_step))
 
     return {
         "status": "SUCCESS",
@@ -101,6 +109,7 @@ def toggle_demo_mode(
         "demo_simulation_active": bool(srv.is_demo_mode),
         "demo_episode_id": str(srv.demo_episode_id),
         "demo_step_index": int(srv.demo_step_index),
+        "demo_max_step": int(max_step),
         "message": f"Demo simulation mode {'ACTIVATED' if srv.is_demo_mode else 'DEACTIVATED'}.",
     }
 
@@ -114,6 +123,7 @@ def tick_demo_simulation(steps: int = Query(1, ge=1, le=15)):
         "status": "SUCCESS",
         "is_demo_mode": True,
         "demo_step_index": new_step,
+        "demo_max_step": int(srv.get_demo_max_step()),
         "episode_id": srv.demo_episode_id,
         "message": f"Simulation advanced by {steps} min (now at step {new_step}).",
     }
@@ -128,6 +138,7 @@ def jump_to_hazard_buildup():
         "status": "SUCCESS",
         "is_demo_mode": True,
         "demo_step_index": new_step,
+        "demo_max_step": int(srv.get_demo_max_step()),
         "episode_id": srv.demo_episode_id,
         "message": f"Fast-forwarded to active hazard buildup (step {new_step}).",
     }
@@ -141,6 +152,7 @@ def reset_demo_baseline():
         "status": "SUCCESS",
         "is_demo_mode": bool(srv.is_demo_mode),
         "demo_step_index": new_step,
+        "demo_max_step": int(srv.get_demo_max_step()),
         "episode_id": srv.demo_episode_id,
         "message": f"Simulation reset to baseline safe state (step {new_step}).",
     }
@@ -307,6 +319,7 @@ def get_live_overview():
         "current_methane": float(stream_points[-1]["methane_pct"]) if stream_points else 0.5,
         "current_airflow": float(stream_points[-1]["airflow"]) if stream_points else 10.0,
         "step_index": int(srv.demo_step_index),
+        "max_step": int(srv.get_demo_max_step()),
         "simulated_time": stream_points[-1]["timestamp"] if stream_points else "N/A",
         "points": stream_points,
     }
