@@ -1,0 +1,33 @@
+# Python
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node & Frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+.vite/
+frontend/.vite/
+test-results/
+frontend/test-results/
+
+# Temporary Uploads & Data caches
+data/uploads/*
+!data/uploads/.gitkeep
+
+# Logs & Environment
+*.log
+.env
+.env.local
+.DS_Store
+Thumbs.db

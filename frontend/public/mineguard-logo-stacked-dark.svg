@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="270" viewBox="0 0 340 270">
+<title>MineGuard stacked logo</title>
+<g transform="translate(106 16) scale(1.0)">
+
+    <path d="M64 7 L108 23 V58 C108 85 91 106 64 121 C37 106 20 85 20 58 V23 Z"
+          fill="#182B3A" />
+    <path d="M37 59 C38 40 49 29 64 29 C79 29 90 40 91 59 L91 64 L37 64 Z"
+          fill="#FFFFFF"/>
+    <path d="M33 59 H95 C98 59 100 62 100 65 C100 68 98 70 95 70 H33 C30 70 28 68 28 65 C28 62 30 59 33 59 Z"
+          fill="#FFFFFF"/>
+    <path d="M47 39 Q64 31 81 39" stroke="#182B3A" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="80" cy="48" r="6.5" fill="#E7B64A" stroke="#182B3A" stroke-width="2"/>
+    <path d="M34 88 L51 75 L63 85 L75 78 L94 95" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    
+</g>
+<text x="170" y="183" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="800" letter-spacing="-0.6" fill="#FFFFFF">MINE<tspan fill="#8DC2D1">GUARD</tspan></text>
+<text x="170" y="209" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="600" letter-spacing="1.9" fill="#C1CBD3">MINE SAFETY OPERATIONS</text>
+</svg>

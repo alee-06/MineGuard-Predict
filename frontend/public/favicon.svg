@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<title>MineGuard favicon</title>
+<path d="M32 3 L56 12 V29 C56 44 46 55 32 62 C18 55 8 44 8 29 V12 Z" fill="#182B3A"/>
+<path d="M18 31 C19 20 25 14 32 14 C39 14 45 20 46 31 V34 H18 Z" fill="#FFFFFF"/>
+<path d="M15 31 H49 C51 31 52 33 52 35 C52 37 51 38 49 38 H15 C13 38 12 37 12 35 C12 33 13 31 15 31 Z" fill="#FFFFFF"/>
+<circle cx="41" cy="23" r="4.5" fill="#E7B64A" stroke="#182B3A" stroke-width="1.5"/>
+<path d="M18 46 L26 40 L32 45 L39 41 L46 48" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
